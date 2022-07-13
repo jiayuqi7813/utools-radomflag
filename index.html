@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- 必须的 meta 标签 -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <!-- Bootstrap 的 CSS 文件 -->
+<!-- 新 Bootstrap5 核心 CSS 文件 -->
+<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
+ 
+<!--  popper.min.js 用于弹窗、提示、下拉菜单 -->
+<script src="https://cdn.staticfile.org/popper.js/2.9.3/umd/popper.min.js"></script>
+ 
+<!-- 最新的 Bootstrap5 核心 JavaScript 文件 -->
+<script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.min.js"></script>
+<script src="md5.js"></script>
+<title>Hello, world!</title>
+<body>
+<div class="input-group mb-3">
+<span class="input-group-text">uuid格式</span>
+<input type="text" class="form-control" id="uuid">
+<button onclick="uuid()">随机生成</button>
+</div>
+<div class="input-group mb-3">
+    <span class="input-group-text">md5格式</span>
+    <input type="text" class="form-control" id="md5">
+    <button onclick="md5()">随机生成</button>
+    </div>
+</body>
+<script type="text/javascript">
+    function md5(){
+        var str = Math.random().toString(30);
+        var md5str = hex_md5(str);
+        console.log(md5str)
+        smd5= 'flag{'+md5str+'}'
+        document.getElementById("md5").value=smd5;
+        return smd5;
+    
+    }
+    function uuid() {
+        var s = [];
+        var hexDigits = "0123456789abcdef";
+        for (var i = 0; i < 36; i++) {
+            s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
+        }
+        s[14] = "4";  // bits 12-15 of the time_hi_and_version field to 0010
+        s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1);  // bits 6-7 of the clock_seq_hi_and_reserved to 01
+        s[8] = s[13] = s[18] = s[23] = "-";
+        var uuid = s.join("");
+        uuid = 'flag{'+uuid+'}';
+        document.getElementById("uuid").value=uuid;
+        return uuid;
+        
+        
+    }
+    document.getElementById("md5").value=md5();
+    document.getElementById("uuid").value=uuid();
+</script>
+
+</html>
